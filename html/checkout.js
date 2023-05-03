@@ -17,7 +17,8 @@
         clientSecret: clientSecret,
         // Fully customizable with appearance API.
         appearance: {
-            /*...*/
+            theme: "night",
+            labels: "floating",
         },
     };
 
