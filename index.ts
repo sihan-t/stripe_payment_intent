@@ -23,7 +23,13 @@ app.post("/test", async (req: Request, res: Response) => {
     } else {
         customer = customers[0];
     }
-    res.status(200).json(customer);
+
+    const setupIntent = await stripe.setupIntents.create({
+        customer: customer.id,
+        payment_method_types: ["card"],
+    });
+
+    res.status(200).json({ clientSecret: setupIntent.client_secret });
 });
 
 app.listen(8000, () => {
