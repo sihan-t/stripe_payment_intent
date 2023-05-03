@@ -1,11 +1,13 @@
 import express, { Request, Response } from "express";
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const stripe = new Stripe(process.env.STRIPE_API_KEY!, {
     apiVersion: "2022-11-15",
 });
@@ -30,6 +32,11 @@ app.post("/test", async (req: Request, res: Response) => {
     });
 
     res.status(200).json({ clientSecret: setupIntent.client_secret });
+});
+
+app.get("/success", (req: Request, res: Response) => {
+    console.log(req.query);
+    res.status(200).send({ message: "success" });
 });
 
 app.listen(8000, () => {
